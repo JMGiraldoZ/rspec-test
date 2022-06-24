@@ -4,37 +4,36 @@ RSpec.describe Auction, type: :model do
   let(:seller) {
     User.new(:email => "jane@doe.com", :password => "pw1234")
   }
-  subject {
-    described_class.new(title: "Anything",
-                        description: "Lorem ipsum",
-                        start_date: DateTime.now,
-                        end_date: DateTime.now + 1.week,
-                        user_id: 1)
-  }
 
-  describe "Associations" do
+  subject = FactoryBot.create :Auction
+
+  describe 'Associations' do
     it { should belong_to(:user).without_validating_presence }
     it { should have_many(:bids) }
   end
 
-  it "is valid with valid attributes" do
-    expect(subject).to be_valid
-  end
+  context 'When create an Auction ' do
 
-  it 'is not valid without a title' do
-    subject.title = nil
-    expect(subject).to_not be_valid
-  end
-  it 'is not valid without a description' do
-    subject.description = nil
-    expect(subject).to_not be_valid  
-  end
-  it 'is not valid without a start_date' do
-    subject.start_date = nil
-    expect(subject).to_not be_valid  
-  end
-  it 'is not valid without a end_date' do
-    subject.end_date = nil
-    expect(subject).to_not be_valid  
+    it { expect(subject).to be_valid }
+
+    it 'The title is empty' do
+      subject.title = nil
+      expect(subject).to_not be_valid
+    end
+
+    it 'The description is empty' do
+      subject.description = nil
+      expect(subject).to_not be_valid  
+    end
+
+    it 'The start date is empty' do
+      subject.start_date = nil
+      is_expected.to_not be_valid  
+    end
+    
+    it 'The end date is empty' do
+      subject.end_date = nil
+      is_expected.to_not be_valid
+    end  
   end
 end

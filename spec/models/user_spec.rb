@@ -6,19 +6,21 @@ RSpec.describe User, :type => :model do
                              email: "juan@correo.com"
          )  
   }
+  
   describe "Validations" do
-    it "is valid with valid attributes" do
+    context "When log with invalid attributes" do
       expect(subject).to be_valid
     end
 
-    it "is not valid without a password" do
+    context "When no enter a password" do
       subject.password = nil
       expect(subject).to_not be_valid
     end
 
-    it "is not valid without an email" do
+    context "When no enter an email" do
       subject.email = nil
       expect(subject).to_not be_valid
+      
     end
   end
 end
